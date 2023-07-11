@@ -1,3 +1,5 @@
+package 객체설계;
+
 public class Theater {
     private TicketSeller ticketSeller;
 
