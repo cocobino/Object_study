@@ -1,5 +1,3 @@
-package 객체지향;
-
 import java.time.LocalDateTime;
 
 public class Screening {

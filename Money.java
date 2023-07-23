@@ -1,5 +1,3 @@
-package 객체지향;
-
 import java.math.BigDecimal;
 
 public class Money {
