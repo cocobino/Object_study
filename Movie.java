@@ -6,18 +6,18 @@ public abstract class Movie {
     private String title;
     private Duration runningTime;
     private Money fee;
-    private List<DiscountCondition> discountConditions;
+    private List<IDiscountCondition> IDiscountConditions;
 
 
-    public Movie(String title, Duration runningTime, Money fee, DiscountCondition... discountConditions) {
+    public Movie(String title, Duration runningTime, Money fee, IDiscountCondition... IDiscountConditions) {
         this.title = title;
         this.runningTime = runningTime;
         this.fee = fee;
-        this.discountConditions = Arrays.asList(discountConditions);
+        this.IDiscountConditions = Arrays.asList(IDiscountConditions);
     }
 
     public boolean isDiscountable(Screening screening) {
-        return discountConditions.stream()
+        return IDiscountConditions.stream()
             .anyMatch(condition -> condition.isSatisfiedBy(screening));
     }
 

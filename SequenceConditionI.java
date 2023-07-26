@@ -1,7 +1,7 @@
-public class SequenceCondition implements DiscountCondition {
+public class SequenceConditionI implements IDiscountCondition {
     private int sequence;
 
-    public SequenceCondition(int sequence) {
+    public SequenceConditionI(int sequence) {
         this.sequence = sequence;
     }
 

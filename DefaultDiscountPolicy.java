@@ -3,14 +3,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class DefaultDiscountPolicy implements DiscountPolicy{
-    private List<DiscountCondition> conditions = new ArrayList();
+    private List<IDiscountCondition> conditions = new ArrayList();
 
-    public DefaultDiscountPolicy(DiscountCondition ... conditions) {
+    public DefaultDiscountPolicy(IDiscountCondition... conditions) {
         this.conditions = Arrays.asList(conditions);
     }
 
     public Money calculateDiscountAmount(Screening screening) {
-        for(DiscountCondition each : conditions) {
+        for(IDiscountCondition each : conditions) {
             if (each.isSatisfiedBy(screening)) {
                 return getDiscountAmount(screening);
             }

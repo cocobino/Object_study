@@ -46,7 +46,7 @@ GRASP 패턴을 통해 책임할당의 어려움에 답을 찾아보기
 5. Movie 객체에서 해야하는 작업 고민
    5. 할인 가능여부 판단 후 금액 계산
    6. 관련되어 **외부에 도움 요청**
-   7. 할인에 대한 정보 전문가는 `DiscountCondition`
+   7. 할인에 대한 정보 전문가는 `IDiscountCondition`
 
 ![img_3.png](img_3.png)
 
@@ -54,7 +54,7 @@ GRASP 패턴을 통해 책임할당의 어려움에 답을 찾아보기
 설계는 `트레이드 오프 활동` 정보전문가 패턴 이외에도 다양한 경우의 수를 고려한 설계 선택이 필요함
 ![img_4.png](img_4.png)
 
-Screening이 DiscountCondition 과 직접 협력하지 않은 이유는 `응집도와 결합도`에 원인이 있음
+Screening이 IDiscountCondition 과 직접 협력하지 않은 이유는 `응집도와 결합도`에 원인이 있음
 다양한 대안들이 존재한다면 응집도/결합도 측면에서 더 나은 대안을 선택해야함 → ` LOW COHESION /LOW COUPLING PATTERN`
 
 #### LOW COUPLING
@@ -123,7 +123,7 @@ class Movie {
 Movie는 메시지에 응답하기위해 `calculateMovieFee` 메서드와 필요한 필드를 구현함, Movie는 DiscountCondition에 할인 여부를 판단하는 메시지를 전송함
 
 ```java
-public class DiscountCondition {
+public class IDiscountCondition {
     boolean isSatisfiedBy(Screening screening);
 }
 ```
@@ -131,7 +131,7 @@ isSatisfiedBy 메서드는 type의 값에 따라 적절한 메서드를 호출�
 그리고 조건을 판단하기 위해 Screening의 정보를 가져옴
 
 
-### DiscountCondition 개선하기
+### IDiscountCondition 개선하기
 ```java
 public boolean isSatisfiedBy(Screening screening) {
         if (type == DiscountConditionType.PERIOD) {
@@ -156,11 +156,11 @@ private boolean isSatisfiedByPeriod(Screening screening) {
 
 **메서드들이 인스턴스 변수를 사용하는 방식** :메서드가 객체의 모든 속성을 사용하면 응집도는 높음
 
-- DiscountCondition 의 isSatisfiedBySequence 와 Period 메서드는 sequence는 사용하지만 시간 관련은 사용하지 않음,
+- IDiscountCondition 의 isSatisfiedBySequence 와 Period 메서드는 sequence는 사용하지만 시간 관련은 사용하지 않음,
 - 반대로 Period 에서는 시간관련 필드는 사용하지만 sequence 관련 필드는 사용하지 않음
 
 ### 타입 분리하기
-DiscountCondition 의 큰 문제는 두개의 독립적인 타입이 하나의 클래스 안에 공존함 클래스를 분리하면
+IDiscountCondition 의 큰 문제는 두개의 독립적인 타입이 하나의 클래스 안에 공존함 클래스를 분리하면
 동일한 인스턴스로 코드품질을 높이는데 성공 했지만, **새로운 문제가 발생함**
 
 Movie 와 협력하는 DiscountCondition은 하나였지만 Class 분기가 일어나면 `결합도가 2개`로 늘어남
@@ -172,16 +172,17 @@ Movie 의 입장에서 Sequence와 Period는 동일한 책임을 수행 → 동�
 ![img_6.png](img_6.png)
 
 ```java
-public interface DiscountCondition {
+public interface IDiscountCondition {
     boolean isSatisfiedBy(Screening screening);
 }
 ```
 인터페이스를 통해 이역할을 구현하고 인터페이스를통해 각각을 실체화 하면됨
+
 ```java
-public class SequenceCondition implements DiscountCondition {
+public class SequenceConditionI implements IDiscountCondition {
     private int sequence;
 
-    public SequenceCondition(int sequence) {
+    public SequenceConditionI(int sequence) {
         this.sequence = sequence;
     }
 
@@ -219,18 +220,18 @@ import java.util.List;
       private String title;
       private Duration runningTime;
       private Money fee;
-      private List<DiscountCondition> discountConditions;
+      private List<IDiscountCondition> IDiscountConditions;
 
 
-      public Movie(String title, Duration runningTime, Money fee, DiscountCondition... discountConditions) {
+      public Movie(String title, Duration runningTime, Money fee, IDiscountCondition... IDiscountConditions) {
          this.title = title;
          this.runningTime = runningTime;
          this.fee = fee;
-         this.discountConditions = Arrays.asList(discountConditions);
+         this.IDiscountConditions = Arrays.asList(IDiscountConditions);
       }
 
       public boolean isDiscountable(Screening screening) {
-         return discountConditions.stream()
+         return IDiscountConditions.stream()
                  .anyMatch(condition -> condition.isSatisfiedBy(screening));
       }
 
@@ -258,8 +259,8 @@ import java.time.Duration;
 public class PercentDiscountMovie extends Movie {
     private double percent;
 
-    public PercentDiscountMovie(String title, Duration runningTime, Money fee, double percent, DiscountCondition... discountConditions){
-        super(title, runningTime, fee, discountConditions);
+    public PercentDiscountMovie(String title, Duration runningTime, Money fee, double percent, IDiscountCondition... IDiscountConditions){
+        super(title, runningTime, fee, IDiscountConditions);
         this.percent = percent;
     }
 
@@ -287,4 +288,46 @@ public class PercentDiscountMovie extends Movie {
 
 유연성에대한 압박이 설계에 어떻게 영향을 주는지 잘 보여주게됨
 유연성은 의존성관리의 문제이고 결합도를 조절할 수 있는 능력은 `객체 지향 개발자가 갖춰야 하는 기술중 하나`
+
+## 책임 주도 설계의 대안
+실행되는 코드를 먼저 얻고 난 후에 코드상 명확하게 드러나는 책임을 올바른 위치로 리펙토링하는 방식이 속성으로 배울수 있음
+
+### 메서드 응집도
+```java
+public class ReservationAgency {
+    public Reservation reserve(Screening screening, Customer customer, int audienceCount) {
+        boolean discountable = checkDiscountable(screening);
+        Money fee = calculateFee(screening, discountable, audienceCount);
+        return createReservation(screening, customer, fee, audienceCount);
+    }
+    
+    ....
+}
+```
+
+긴 메서드는 다양한 측면에서 코드의 유지보수에 부정적인 영향, `몬스터 메서드`를 피해야한다.
+
+### 객체를 자율적으로 만들기
+```java
+private boolean isDiscountable(IDiscountCondition condition, Screening screening) {
+        if (condition.getType() == DiscountConditionType.PERIOD) {
+            return isSatisfiedByPeriod(condition, screening);
+        }
+        return isSatisfiedBySequence(condition, screening);
+    }
+
+private boolean isSatisfiedByPeriod(IDiscountCondition condition, Screening screening) {
+        return screening.getWhenScreened().getDayOfWeek().equals(condition.getDayOfWeek()) &&
+        condition.getStartTime().compareTo(screening.getWhenScreened().toLocalTime()) <= 0 &&
+        condition.getEndTime().compareTo(screening.getWhenScreened().toLocalTime()) >= 0;
+        }
+
+private boolean isSatisfiedBySequence(IDiscountCondition condition, Screening screening) {
+        return condition.getSequence() == screening.getSequence();
+        }
+
+```
+
+IDiscountCondition 의 getType 데이터를 통해 할인 조겁을 알아내고 그에 맞는 isSatisfiedBy~ 함수를 구현함,
+해당 메서드는 ReservationAgency 에 있을 필요가 사라짐
 

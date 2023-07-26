@@ -1,12 +1,12 @@
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
-public class PeriodCondition implements DiscountCondition {
+public class PeriodConditionI implements IDiscountCondition {
     private DayOfWeek dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
 
-    public PeriodCondition(DayOfWeek dayOfweek, LocalTime startTime, LocalTime endTime) {
+    public PeriodConditionI(DayOfWeek dayOfweek, LocalTime startTime, LocalTime endTime) {
         this.dayOfWeek = dayOfweek;
         this.startTime = startTime;
         this.endTime = endTime;
