@@ -477,6 +477,6 @@ end
 ![img_3.png](img_3.png)
 
 ---
-기존 코드에 아무런 영향도 미치지 않고 새로운 객체 유형과 행위를 추가할 수 있는 객체지향의 특성을 `OCP(Open-Closed Principle)`라고 함
+기존 코드에 아무런 영향도 미치지 않고 새로운 객체 유형과 행위를 추가할수 있는 객체지향의 특성을 `OCP(Open-Closed Principle)`라고 함
 
 
