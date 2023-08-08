@@ -12,3 +12,6 @@ https://github.com/cocobino/Object_study/tree/5_%EC%B1%85%EC%9E%84%ED%95%A0%EB%8
 
 ### 6장 메시지와 인터페이스
 https://github.com/cocobino/Object_study/blob/6_%EB%A9%94%EC%8B%9C%EC%A7%80%EC%99%80_%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4/ReservationAgency.java
+
+### 7장 객체 분해
+https://github.com/cocobino/Object_study/tree/7_%EA%B0%9D%EC%B2%B4_%EB%B6%84%ED%95%B4
