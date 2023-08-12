@@ -16,6 +16,8 @@ https://github.com/cocobino/Object_study/blob/6_%EB%A9%94%EC%8B%9C%EC%A7%80%EC%9
 ### 7장 객체 분해
 https://github.com/cocobino/Object_study/tree/7_%EA%B0%9D%EC%B2%B4_%EB%B6%84%ED%95%B4
 
-
 ### 8장 의존성 관리하기
 https://github.com/cocobino/Object_study/tree/9_%EC%9D%98%EC%A1%B4%EC%84%B1_%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0
+
+### 9장 유연한 설계
+https://github.com/cocobino/Object_study/tree/9_%EC%9C%A0%EC%97%B0%ED%95%9C_%EC%84%A4%EA%B3%84
