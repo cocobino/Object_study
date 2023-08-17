@@ -24,3 +24,6 @@ https://github.com/cocobino/Object_study/tree/9_%EC%9C%A0%EC%97%B0%ED%95%9C_%EC%
 
 ### 10장 상속과 코드 재사용
 https://github.com/cocobino/Object_study/tree/10_%EC%83%81%EC%86%8D%EA%B3%BC%EC%BD%94%EB%93%9C%EC%9E%AC%EC%82%AC%EC%9A%A9
+
+### 11장 합성과 유연한 설계
+https://github.com/cocobino/Object_study/tree/11_%ED%95%A9%EC%84%B1%EA%B3%BC_%EC%9C%A0%EC%97%B0%ED%95%9C_%EC%84%A4%EA%B3%84
